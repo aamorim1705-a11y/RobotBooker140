@@ -22,4 +22,5 @@ Create Booking
     Status Should Be    200
     Should Be Equal    ${response_body}[booking][firstname]    Rafaela
     Should Be Equal    ${response_body}[booking][bookingdates][checkin]    2026-06-06
+    
 
