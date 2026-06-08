@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.2 (Python 3.14.3 on win32)" generated="2026-06-08T18:12:57.286280" rpa="false" schemaversion="5">
+<suite id="s1" name="Test Booker" source="D:\Andrea\iCloudDrive\Documents\Andrea\Formação em Teste de Software\Iterasys\RobotBooker140\__tests__\api\test_booker.robot">
+<kw name="Create Token" owner="common" type="SETUP">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-08T18:12:57.734559" level="INFO">${body} = {'username': 'admin', 'password': 'password123'}</msg>
+<var>${body}</var>
+<arg>username=admin</arg>
+<arg>password=password123</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-08T18:12:57.733568" elapsed="0.001076"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2026-06-08T18:12:59.207361" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/auth 
+ path_url=/auth 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '48', 'Content-Type': 'application/json'} 
+ body=b'{"username": "admin", "password": "password123"}' 
+ </msg>
+<msg time="2026-06-08T18:12:59.207577" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/auth 
+ status=200, reason=OK 
+ headers={'Content-Length': '27', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 08 Jun 2026 17:13:05 GMT', 'Etag': 'W/"1b-+3b9JymQ6MLlKb/cyz8QwK6wRag"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=pe6wxWiW91QcN4nBtI10Qhc5ZVsALyU7d7yavuhim5c%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1780938785"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=pe6wxWiW91QcN4nBtI10Qhc5ZVsALyU7d7yavuhim5c%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1780938785"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"token":"6335d3edb0a2dbc"} 
+ </msg>
+<msg time="2026-06-08T18:12:59.207826" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>url=${url}/auth</arg>
+<arg>json=${body}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2026-06-08T18:12:57.734919" elapsed="1.472968"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.208229" elapsed="0.000422"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:12:59.211070" level="INFO">${token} = 6335d3edb0a2dbc</msg>
+<var>${token}</var>
+<arg>${response.json()}[token]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.208968" elapsed="0.002214"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:12:59.212616" level="INFO">${token} = 6335d3edb0a2dbc</msg>
+<arg>${token}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.211571" elapsed="0.001198"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${token}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.213079" elapsed="0.001024"/>
+</kw>
+<arg>${url}</arg>
+<status status="PASS" start="2026-06-08T18:12:57.732496" elapsed="1.481862"/>
+</kw>
+<test id="s1-t1" name="Create Booking" line="14">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-06-08T18:12:59.216102" level="INFO">${headers} = {'Content-Type': 'application/json'}</msg>
+<var>${headers}</var>
+<arg>Content-Type=${content_type}</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.215382" elapsed="0.000794"/>
+</kw>
+<kw name="Evaluate" owner="BuiltIn">
+<msg time="2026-06-08T18:12:59.217868" level="INFO">${body} = {'firstname': 'Rafaela', 'lastname': 'Ribeiro', 'totalprice': 130, 'depositpaid': False, 'bookingdates': {'checkin': '2026-06-06', 'checkout': '2026-06-06'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${body}</var>
+<arg>json.loads(open('./fixtures/json/booking1.json').read())</arg>
+<doc>Evaluates the given expression in Python and returns the result.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.216653" elapsed="0.001281"/>
+</kw>
+<kw name="POST" owner="RequestsLibrary">
+<msg time="2026-06-08T18:13:00.477424" level="INFO">POST Request : url=https://restful-booker.herokuapp.com/booking 
+ path_url=/booking 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Type': 'application/json', 'Content-Length': '189'} 
+ body=b'{"firstname": "Rafaela", "lastname": "Ribeiro", "totalprice": 130, "depositpaid": false, "bookingdates": {"checkin": "2026-06-06", "checkout": "2026-06-06"}, "additionalneeds": "Breakfast"}' 
+ </msg>
+<msg time="2026-06-08T18:13:00.477683" level="INFO">POST Response : url=https://restful-booker.herokuapp.com/booking 
+ status=200, reason=OK 
+ headers={'Content-Length': '204', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 08 Jun 2026 17:13:06 GMT', 'Etag': 'W/"cc-Bqgd9Us8QpJboAVAvV3Jx/19XKo"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=Z2ZBnXW8QdMMGg05DjlLu4PUVftqsd9u7ItR%2FoHq%2FTc%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1780938786"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=Z2ZBnXW8QdMMGg05DjlLu4PUVftqsd9u7ItR%2FoHq%2FTc%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1780938786"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"bookingid":1179,"booking":{"firstname":"Rafaela","lastname":"Ribeiro","totalprice":130,"depositpaid":false,"bookingdates":{"checkin":"2026-06-06","checkout":"2026-06-06"},"additionalneeds":"Breakfast"}} 
+ </msg>
+<msg time="2026-06-08T18:13:00.478010" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>url=${url}/booking</arg>
+<arg>json=${body}</arg>
+<arg>headers=${headers}</arg>
+<doc>Sends a POST request.</doc>
+<status status="PASS" start="2026-06-08T18:12:59.218439" elapsed="1.259634"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:13:00.481134" level="INFO">${response_body} = {'bookingid': 1179, 'booking': {'firstname': 'Rafaela', 'lastname': 'Ribeiro', 'totalprice': 130, 'depositpaid': False, 'bookingdates': {'checkin': '2026-06-06', 'checkout': '2026-06-06'}, 'additional...</msg>
+<var>${response_body}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.478632" elapsed="0.002631"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.481811" elapsed="0.001001"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.483326" elapsed="0.000253"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][firstname]</arg>
+<arg>${firstname}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.484043" elapsed="0.001264"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][lastname]</arg>
+<arg>${lastname}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.485923" elapsed="0.001209"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][totalprice]</arg>
+<arg>${totalprice}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.488529" elapsed="0.001145"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][depositpaid]</arg>
+<arg>${depositpaid}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.490948" elapsed="0.001140"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][bookingdates][checkin]</arg>
+<arg>${bookingdates}[checkin]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.492693" elapsed="0.000795"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][bookingdates][checkout]</arg>
+<arg>${bookingdates}[checkout]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.493999" elapsed="0.001029"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[booking][additionalneeds]</arg>
+<arg>${additionalneeds}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.495904" elapsed="0.001196"/>
+</kw>
+<status status="PASS" start="2026-06-08T18:12:59.214551" elapsed="1.288180"/>
+</test>
+<test id="s1-t2" name="Get Booking" line="33">
+<kw name="Get Booking Id" owner="common">
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2026-06-08T18:13:01.691776" level="INFO">GET Request : url=https://restful-booker.herokuapp.com/booking?firstname=Rafaela&amp;lastname=Ribeiro 
+ path_url=/booking?firstname=Rafaela&amp;lastname=Ribeiro 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-08T18:13:01.691928" level="INFO">GET Response : url=https://restful-booker.herokuapp.com/booking?firstname=Rafaela&amp;lastname=Ribeiro 
+ status=200, reason=OK 
+ headers={'Content-Length': '20', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 08 Jun 2026 17:13:07 GMT', 'Etag': 'W/"14-B9CYIf9mzXMMqazY88bEs6Y4t5Q"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=CnDlHHv2DRDnWW%2F5uv4HnHQxJNCR8wHce9LbljAO7ZQ%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1780938787"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=CnDlHHv2DRDnWW%2F5uv4HnHQxJNCR8wHce9LbljAO7ZQ%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1780938787"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body=[{"bookingid":1179}] 
+ </msg>
+<msg time="2026-06-08T18:13:01.692138" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>url=${url}/booking?firstname=${firstname}&amp;lastname=${lastname}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2026-06-08T18:13:00.508667" elapsed="1.183546"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:13:01.693738" level="INFO">${response_body} = [{'bookingid': 1179}]</msg>
+<var>${response_body}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.692473" elapsed="0.001324"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.693997" elapsed="0.000745"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>200</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.695068" elapsed="0.000276"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:13:01.696116" level="INFO">${booking_id} = 1179</msg>
+<var>${booking_id}</var>
+<arg>${response_body}[0][bookingid]</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.695534" elapsed="0.000653"/>
+</kw>
+<kw name="Set Suite Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:13:01.696980" level="INFO">${booking_id} = 1179</msg>
+<arg>${booking_id}</arg>
+<doc>Makes a variable available everywhere within the scope of the current suite.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.696400" elapsed="0.000657"/>
+</kw>
+<arg>${url}</arg>
+<arg>${firstname}</arg>
+<arg>${lastname}</arg>
+<status status="PASS" start="2026-06-08T18:13:00.507481" elapsed="1.189720"/>
+</kw>
+<kw name="GET" owner="RequestsLibrary">
+<msg time="2026-06-08T18:13:02.846806" level="INFO">GET Request : url=https://restful-booker.herokuapp.com/booking/1179 
+ path_url=/booking/1179 
+ headers={'User-Agent': 'python-requests/2.34.2', 'Accept-Encoding': 'gzip, deflate, zstd', 'Accept': '*/*', 'Connection': 'keep-alive'} 
+ body=None 
+ </msg>
+<msg time="2026-06-08T18:13:02.846956" level="INFO">GET Response : url=https://restful-booker.herokuapp.com/booking/1179 
+ status=200, reason=OK 
+ headers={'Content-Length': '175', 'Content-Type': 'application/json; charset=utf-8', 'Date': 'Mon, 08 Jun 2026 17:13:08 GMT', 'Etag': 'W/"af-3+c2H00EfbxDkIfrJGksMOi2QLo"', 'Nel': '{"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}', 'Report-To': '{"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=YDXvOedradlip4m4%2B4LR2aNv%2FwiFKaYl2QC1ApM4A9g%3D\\u0026sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add\\u0026ts=1780938788"}],"max_age":3600}', 'Reporting-Endpoints': 'heroku-nel="https://nel.heroku.com/reports?s=YDXvOedradlip4m4%2B4LR2aNv%2FwiFKaYl2QC1ApM4A9g%3D&amp;sid=c46efe9b-d3d2-4a0c-8c76-bfafa16c5add&amp;ts=1780938788"', 'Server': 'Heroku', 'Via': '1.1 heroku-router', 'X-Powered-By': 'Express'} 
+ body={"firstname":"Rafaela","lastname":"Ribeiro","totalprice":130,"depositpaid":false,"bookingdates":{"checkin":"2026-06-06","checkout":"2026-06-06"},"additionalneeds":"Breakfast"} 
+ </msg>
+<msg time="2026-06-08T18:13:02.847170" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>url=${url}/booking/${booking_id}</arg>
+<doc>Sends a GET request.</doc>
+<status status="PASS" start="2026-06-08T18:13:01.697758" elapsed="1.149482"/>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<msg time="2026-06-08T18:13:02.849209" level="INFO">${response_body} = {'firstname': 'Rafaela', 'lastname': 'Ribeiro', 'totalprice': 130, 'depositpaid': False, 'bookingdates': {'checkin': '2026-06-06', 'checkout': '2026-06-06'}, 'additionalneeds': 'Breakfast'}</msg>
+<var>${response_body}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.847846" elapsed="0.001431"/>
+</kw>
+<kw name="Log To Console" owner="BuiltIn">
+<arg>${response_body}</arg>
+<doc>Logs the given message to the console.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.849850" elapsed="0.000883"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[firstname]</arg>
+<arg>${firstname}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.851258" elapsed="0.000657"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[lastname]</arg>
+<arg>${lastname}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.852466" elapsed="0.001185"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[totalprice]</arg>
+<arg>${totalprice}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.855177" elapsed="0.000835"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[depositpaid]</arg>
+<arg>${depositpaid}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.856909" elapsed="0.001173"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[bookingdates][checkin]</arg>
+<arg>${bookingdates}[checkin]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.858692" elapsed="0.001049"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[bookingdates][checkout]</arg>
+<arg>${bookingdates}[checkout]</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.860891" elapsed="0.001143"/>
+</kw>
+<kw name="Should Be Equal" owner="BuiltIn">
+<arg>${response_body}[additionalneeds]</arg>
+<arg>${additionalneeds}</arg>
+<doc>Fails if the given objects are unequal.</doc>
+<status status="PASS" start="2026-06-08T18:13:02.862647" elapsed="0.000739"/>
+</kw>
+<status status="PASS" start="2026-06-08T18:13:00.506095" elapsed="2.357801"/>
+</test>
+<status status="PASS" start="2026-06-08T18:12:57.290535" elapsed="5.576146"/>
+</suite>
+<statistics>
+<total>
+<stat pass="2" fail="0" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Test Booker" id="s1" pass="2" fail="0" skip="0">Test Booker</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
