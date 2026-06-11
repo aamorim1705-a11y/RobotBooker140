@@ -8,7 +8,11 @@
 Library        RequestsLibrary
 Resource       ../../resources/common.resource
 Variables      ../../resources/variables.py
-Suite Setup    Create Token    ${url}
+Suite Setup    Run Keywords
+...    Health Check    ${url}
+...    AND
+...    Create Token    ${url}
+
 
 *** Test Cases ***
 Create Booking
